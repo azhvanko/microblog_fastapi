@@ -25,6 +25,10 @@ services:
       - fastapi_microblog_postgres_dev:/var/lib/postgresql/data
     env_file:
       - ./.env.dev
+  redis:
+    image: redis:alpine
+    restart: unless-stopped
+    container_name: fastapi_microblog_redis_dev
 
 
 volumes:
