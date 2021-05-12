@@ -22,7 +22,18 @@ async def sign_up(
     user_data: schemas.UserCreate,
     auth_service: AuthService = Depends(),
 ):
-    return await auth_service.register_new_user(user_data)
+    tokens = await auth_service.register_new_user(user_data)
+    response = JSONResponse(
+        {'token_type': tokens.token_type, 'access_token': tokens.access_token}
+    )
+    response.set_cookie(
+        'refresh_token',
+        tokens.refresh_token,
+        max_age=settings.JWT_REFRESH_TOKEN_EXPIRES,
+        httponly=True
+    )
+    response.status_code = status.HTTP_201_CREATED
+    return response
 
 
 @router.post(
@@ -57,7 +68,18 @@ async def get_refresh_token(
         token: str = Depends(oauth2_scheme),
         auth_service: AuthService = Depends()
 ):
-    return await auth_service.get_refresh_token(token)
+    tokens = await auth_service.get_refresh_token(token)
+    response = JSONResponse(
+        {'token_type': tokens.token_type, 'access_token': tokens.access_token}
+    )
+    response.set_cookie(
+        'refresh_token',
+        tokens.refresh_token,
+        max_age=settings.JWT_REFRESH_TOKEN_EXPIRES,
+        httponly=True
+    )
+    response.status_code = status.HTTP_201_CREATED
+    return response
 
 
 @router.get(
