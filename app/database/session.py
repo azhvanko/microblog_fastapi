@@ -2,24 +2,25 @@ from typing import AsyncIterator, Iterator
 
 from aioredis import create_redis, Redis
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import Session, sessionmaker
 
 from ..core import settings
 
 
-_engine = create_engine(
-    settings.SQLALCHEMY_DATABASE_URL,
-    pool_pre_ping=True
-)
-SessionLocal = sessionmaker(
-    autocommit=False,
-    autoflush=False,
-    bind=_engine
-)
+DATABASE = settings.SQLALCHEMY_DATABASE_URL
+REDIS = settings.REDIS_DATABASE_URL
 
 
-def get_db_session() -> Iterator[SessionLocal]:
-    session = SessionLocal()
+def _create_session() -> Session:
+    echo = settings.DEBUG
+    engine = create_engine(DATABASE, pool_pre_ping=True, echo=echo)
+    session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+    return session()
+
+
+def get_db_session() -> Iterator[Session]:
+    session = _create_session()
     try:
         yield session
     finally:
@@ -27,7 +28,7 @@ def get_db_session() -> Iterator[SessionLocal]:
 
 
 async def get_redis_session() -> AsyncIterator[Redis]:
-    redis = await create_redis(settings.REDIS_URL, encoding='utf-8')
+    redis = await create_redis(REDIS, encoding='utf-8')
     try:
         yield redis
     finally:
