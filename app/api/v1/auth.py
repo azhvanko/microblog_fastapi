@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, status
+from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordRequestForm
-from starlette.responses import JSONResponse
 
 from ... import schemas
 from ...core import settings

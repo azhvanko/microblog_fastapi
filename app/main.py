@@ -1,7 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
 
-from .api.v1 import api_router
+from .api import api_router
 
 
 app = FastAPI(title='fastapi-microblog')
