@@ -7,6 +7,7 @@ from sqlalchemy import (
     Integer,
     String
 )
+from sqlalchemy.orm import relationship
 
 from ..database.base_class import Base
 
@@ -22,3 +23,14 @@ class User(Base):
     is_active = Column(Boolean(), default=True)
     is_staff = Column(Boolean(), default=False)
     is_superuser = Column(Boolean(), default=False)
+
+    posts = relationship(
+        'PostRelationship',
+        back_populates='user',
+        cascade='all, delete, delete-orphan'
+    )
+    likes = relationship(
+        'Like',
+        back_populates='user',
+        cascade='all, delete, delete-orphan'
+    )
