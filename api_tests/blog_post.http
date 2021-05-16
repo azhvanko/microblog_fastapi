@@ -1,0 +1,71 @@
+// test create blog post
+POST http://127.0.0.1:8080/api/v1/posts/create
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "content": "test message"
+}
+
+###
+
+// test update blog post
+PUT http://127.0.0.1:8080/api/v1/users/{{username}}/2
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "content": "new test message"
+}
+
+###
+
+// test archive blog post
+PUT http://127.0.0.1:8080/api/v1/users/{{username}}/2/archive
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+// test delete blog post
+DELETE http://127.0.0.1:8080/api/v1/users/{{username}}/2
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+// test create blog post repost
+POST http://127.0.0.1:8080/api/v1/users/{{username}}/3/repost
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+// test delete blog post repost
+DELETE http://127.0.0.1:8080/api/v1/users/{{username}}/3/repost/delete
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+// test create blog post like
+POST http://127.0.0.1:8080/api/v1/users/{{username}}/3/like
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+// test delete blog post like
+PUT http://127.0.0.1:8080/api/v1/users/{{username}}/3/dislike
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
