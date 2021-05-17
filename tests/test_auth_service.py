@@ -3,26 +3,13 @@ import json
 import pytest
 from aioredis import Redis
 from httpx import AsyncClient
-from passlib.hash import bcrypt
 from sqlalchemy.orm import Session
 
 from app import schemas
-from app.models import User
 from tests.utils import BaseTestCase
 
 
 class TestAuthService(BaseTestCase):
-
-    @staticmethod
-    def add_user(db_session: Session, user: dict[str, str]) -> None:
-        new_user = User(
-            username=user['username'],
-            email=user['email'],
-            password_hash=bcrypt.hash(user['password'])
-        )
-
-        db_session.add(new_user)
-        db_session.commit()
 
     @pytest.mark.asyncio
     async def test_sign_up_endpoint_with_new_user(

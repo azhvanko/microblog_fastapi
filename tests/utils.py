@@ -2,6 +2,7 @@ import json
 import pytest
 from aioredis import Redis
 from httpx import AsyncClient
+from passlib.hash import bcrypt
 from sqlalchemy import create_engine, func
 from sqlalchemy.orm import Session
 
@@ -25,6 +26,17 @@ class BaseTestCase:
         engine = create_engine(session.DATABASE, pool_pre_ping=True)
         for t in reversed(Base.metadata.sorted_tables):
             engine.execute(t.delete())
+
+    @staticmethod
+    def add_user(db_session: Session, user: dict[str, str]) -> None:
+        new_user = User(
+            username=user['username'],
+            email=user['email'],
+            password_hash=bcrypt.hash(user['password'])
+        )
+
+        db_session.add(new_user)
+        db_session.commit()
 
     @staticmethod
     async def register_user(
