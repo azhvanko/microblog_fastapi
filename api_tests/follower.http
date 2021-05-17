@@ -1,0 +1,15 @@
+// test follow user
+POST http://127.0.0.1:8080/api/v1/users/new_user/follow
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+// test unfollow user
+PUT http://127.0.0.1:8080/api/v1/users/new_user/unfollow
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+###
