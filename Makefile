@@ -17,3 +17,15 @@ migrate:
 
 test:
 	docker exec -it $(API_CONTAINER) sh -c "pytest -v"
+
+test_auth_service:
+	docker exec -it $(API_CONTAINER) sh -c "pytest -v tests/test_auth_service.py"
+
+test_blog_post_service:
+	docker exec -it $(API_CONTAINER) sh -c "pytest -v tests/test_blog_post_service.py"
+
+test_follower_service:
+	docker exec -it $(API_CONTAINER) sh -c "pytest -v tests/test_follower_service.py"
+
+test_home_service:
+	docker exec -it $(API_CONTAINER) sh -c "pytest -v tests/test_home_service.py"
