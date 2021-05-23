@@ -51,6 +51,25 @@ class BaseTestCase:
         return response.cookies.get('refresh_token')
 
     @staticmethod
+    async def authorize_user(
+            test_app: AsyncClient,
+            user: dict[str, str]
+    ) -> str:
+        headers = {'content-type': 'application/x-www-form-urlencoded', }
+        data = {
+            'username': user['username'],
+            'password': user['password']
+        }
+
+        response = await test_app.post(
+            '/api/v1/auth/sign-in',
+            headers=headers,
+            data=data
+        )
+
+        return response.cookies.get('refresh_token')
+
+    @staticmethod
     def check_is_db_user(db_session: Session, username: str) -> bool:
         is_db_user = (
             db_session
