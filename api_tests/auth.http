@@ -1,0 +1,35 @@
+// test sign up
+POST http://127.0.0.1:8080/api/v1/auth/sign-up
+Accept: application/json
+Content-Type: application/json
+
+{
+  "username": "{{username}}",
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+###
+
+// test sign in
+POST http://127.0.0.1:8080/api/v1/auth/sign-in
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=&username={{username}}&password={{password}}&scope=&client_id=&client_secret=
+
+###
+
+// test refresh token
+PUT http://127.0.0.1:8080/api/v1/auth/refresh
+Accept: application/json
+Authorization: Bearer {{refresh_token}}
+
+###
+
+// test get user
+GET http://127.0.0.1:8080/api/v1/auth/user
+Accept: application/json
+Authorization: Bearer {{access_token}}
+
+###
