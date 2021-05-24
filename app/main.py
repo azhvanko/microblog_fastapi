@@ -2,8 +2,10 @@ import uvicorn
 from fastapi import FastAPI
 
 from .api import api_router
+from .database import create_db_schema
 
 
+create_db_schema()
 app = FastAPI(title='fastapi-microblog')
 
 
