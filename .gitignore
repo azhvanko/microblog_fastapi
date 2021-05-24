@@ -59,7 +59,7 @@ coverage.xml
 *.log
 
 # Environments
-.env.dev
+.env*
 .venv*
 env/
 venv/
