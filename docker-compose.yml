@@ -1,0 +1,34 @@
+version: '3.9'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: fastapi_microblog_api_prod
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8080 --workers 2 --reload
+    restart: always
+    ports:
+    - 8080:8080
+    env_file:
+      - ./.env.prod
+    depends_on:
+      - postgres
+  postgres:
+    build:
+      context: ./postgres
+      dockerfile: ./Dockerfile
+    restart: always
+    container_name: fastapi_microblog_postgres_prod
+    volumes:
+      - fastapi_microblog_postgres_prod:/var/lib/postgresql/data
+    env_file:
+      - ./.env.prod
+  redis:
+    image: redis:alpine
+    restart: always
+    container_name: fastapi_microblog_redis_prod
+
+
+volumes:
+  fastapi_microblog_postgres_prod:
